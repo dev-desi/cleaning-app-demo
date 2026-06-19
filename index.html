@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<meta name="theme-color" content="#0f1d3d"/>
+<title>JAE Cleaning Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#f0f2f5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+:root{--navy:#0f1d3d;--blue:#1a3a7a;--blue-mid:#2952a3;--blue-lt:#e8eef8;--blue-ghost:#f3f6fc;--green:#16a34a;--green-lt:#dcfce7;--green-dk:#15803d;--black:#111;--g50:#f9fafb;--g100:#f3f4f6;--g200:#e5e7eb;--g300:#d1d5db;--g400:#9ca3af;--g500:#6b7280;--g600:#4b5563;--g700:#374151;--red:#ef4444;--red-lt:#fef2f2;--yellow:#f59e0b;--yellow-lt:#fef9c3}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes popIn{0%{transform:scale(0)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(26,58,122,.3)}50%{box-shadow:0 0 0 8px transparent}}
+@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(-20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.fi{animation:fadeIn .3s ease}
+
+.shell{max-width:430px;margin:0 auto;min-height:100vh;background:#fff;position:relative;box-shadow:0 0 80px rgba(0,0,0,.06);overflow-x:hidden}
+.screen{display:none}.screen.active{display:block}
+
+/* Header */
+.hd{background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;padding:20px 20px 18px;position:sticky;top:0;z-index:100}
+.hd-back{background:0 0;border:0;color:#fff;font:500 14px/1 Inter,sans-serif;cursor:pointer;display:flex;align-items:center;gap:6px;padding:2px 0;opacity:.85}.hd-back:hover{opacity:1}
+.hd-t{font-size:20px;font-weight:700;margin-top:4px;letter-spacing:-.3px}
+.hd-g{font-size:22px;font-weight:800;letter-spacing:-.4px}
+.hd-l{font-size:13px;opacity:.75;margin-top:4px}
+
+/* Search */
+.sb{padding:16px 20px 0}.sb-w{position:relative}
+.sb-w input{width:100%;padding:14px 16px 14px 44px;border:1.5px solid var(--g200);border-radius:14px;font:400 15px/1.4 Inter,sans-serif;background:var(--g50);outline:0;transition:.2s}
+.sb-w input:focus{border-color:var(--blue);background:#fff;box-shadow:0 0 0 3px var(--blue-lt)}
+.sb-w .si{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:18px;color:var(--g400);pointer-events:none}
+
+/* Quick Estimate */
+.qe{margin:20px;background:var(--blue-ghost);border-radius:16px;padding:20px;border:1px solid var(--blue-lt)}
+.qe h3{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:12px}
+.tabs{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}.tabs::-webkit-scrollbar{display:none}
+.tb{padding:8px 14px;border-radius:20px;font:600 13px/1 Inter,sans-serif;border:1.5px solid var(--g200);background:#fff;cursor:pointer;white-space:nowrap;color:var(--g600);transition:.15s}.tb.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.fl{font:500 13px/1 Inter,sans-serif;color:var(--g500);display:block;margin:14px 0 6px}
+.ar{display:flex;align-items:center;gap:10px}.ar input{flex:1;padding:12px 14px;border:1.5px solid var(--g200);border-radius:12px;font:700 18px/1 Inter,sans-serif;outline:0;transition:.2s}.ar input:focus{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-lt)}.ar span{font:500 14px/1 Inter,sans-serif;color:var(--g400)}
+.chs{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}.ch{padding:6px 14px;border-radius:16px;font:600 13px/1 Inter,sans-serif;border:1.5px solid var(--g200);background:#fff;cursor:pointer;color:var(--g600);transition:.15s}.ch.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.er{display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding:14px 16px;background:#fff;border-radius:12px;border:1px solid var(--g200)}
+.ep{font-size:26px;font-weight:800;color:var(--navy);letter-spacing:-.5px}.es{font-size:12px;color:var(--g500);margin-top:2px}
+
+/* Section */
+.st{font:700 18px/1 Inter,sans-serif;color:var(--black);padding:24px 20px 12px;letter-spacing:-.3px}.st span{color:var(--g400);font-weight:500;font-size:14px;margin-left:6px}
+
+/* Popular */
+.ps{display:flex;gap:12px;padding:0 20px;overflow-x:auto;scrollbar-width:none}.ps::-webkit-scrollbar{display:none}
+.pc{min-width:150px;border-radius:14px;overflow:hidden;background:#fff;border:1px solid var(--g200);cursor:pointer;transition:.2s;flex-shrink:0}.pc:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.08)}
+.pc-i{height:100px;display:flex;align-items:center;justify-content:center;font-size:40px;background:linear-gradient(135deg,var(--blue-ghost),var(--blue-lt))}.pc-b{padding:10px 12px}.pc-b h4{font-size:13px;font-weight:600;line-height:1.3}.pc-b p{font-size:12px;color:var(--g500);margin-top:3px}
+
+/* Categories */
+.cb{display:flex;gap:8px;padding:0 20px;margin-bottom:4px;overflow-x:auto;scrollbar-width:none}.cb::-webkit-scrollbar{display:none}
+
+/* Service Grid */
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 20px 100px}
+.sc{background:#fff;border:1px solid var(--g200);border-radius:14px;padding:18px 14px;cursor:pointer;transition:.2s}.sc:hover{border-color:var(--blue);box-shadow:0 2px 12px rgba(26,58,122,.08)}
+.sc-ic{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
+.sc h4{font-size:14px;font-weight:600;line-height:1.3}.sc p{font-size:12px;color:var(--g500);margin-top:4px}
+
+/* Bottom Nav */
+.bn{position:fixed;bottom:0;left:50%;transform:translateX(-50%);max-width:430px;width:100%;background:#fff;border-top:1px solid var(--g200);display:flex;justify-content:space-around;padding:8px 0 env(safe-area-inset-bottom,22px);z-index:200}
+.ni{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;background:0 0;border:0;font:500 11px/1 Inter,sans-serif;color:var(--g400);padding:4px 16px;transition:.15s}.ni.on{color:var(--blue)}.ni .nx{font-size:22px}
+
+/* Detail */
+.dh{height:200px;display:flex;align-items:center;justify-content:center;font-size:72px;background:linear-gradient(135deg,var(--blue-ghost),var(--blue-lt))}
+.db{padding:24px 20px 120px}
+.dn{font-size:24px;font-weight:800;color:var(--navy);letter-spacing:-.4px}
+.dt{display:inline-block;font:600 12px/1 Inter,sans-serif;color:var(--blue);background:var(--blue-lt);padding:5px 10px;border-radius:6px;margin-top:8px}
+.dpb{margin-top:20px;padding:18px;background:var(--blue-ghost);border-radius:14px;border:1px solid var(--blue-lt)}
+.dpl{font:600 12px/1 Inter,sans-serif;color:var(--blue);text-transform:uppercase;letter-spacing:.5px}
+.dpa{font-size:28px;font-weight:800;color:var(--navy);margin-top:6px}.dpu{font-size:13px;color:var(--g500);margin-top:2px}
+.dst{font:700 16px/1 Inter,sans-serif;margin:24px 0 10px}
+.ddc{font-size:14px;color:var(--g600);line-height:1.65}
+.dl{list-style:none}.dl li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;font-size:14px;color:var(--g700);line-height:1.45}.dl .ck{color:var(--green);font-weight:700;flex-shrink:0}
+.di{margin-top:20px;padding:12px 16px;background:var(--g50);border-radius:10px;border:1px solid var(--g200);font-size:13px;color:var(--g500);display:flex;gap:8px;line-height:1.4}
+.dcl{margin-top:12px;padding:14px 16px;background:var(--blue-ghost);border-radius:10px;border:1px solid var(--blue-lt);font-size:14px;color:var(--navy);display:flex;align-items:center;gap:8px;font-weight:500;cursor:pointer;transition:.15s}.dcl:hover{background:var(--blue-lt)}
+
+/* Sticky CTA */
+.sky{position:fixed;bottom:0;left:50%;transform:translateX(-50%);max-width:430px;width:100%;background:#fff;border-top:1px solid var(--g200);padding:14px 20px 28px;display:flex;align-items:center;justify-content:space-between;z-index:200}.sky.ctr{justify-content:center}
+.sp{font-size:22px;font-weight:800;color:var(--navy)}.sl{font-size:12px;color:var(--g400);font-weight:500}
+
+/* Buttons */
+.btn{padding:14px 24px;border:0;border-radius:12px;font:700 15px/1 Inter,sans-serif;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:.15s;letter-spacing:-.1px}
+.btn:active{transform:scale(.97)}.btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.btn-b{background:var(--navy);color:#fff}.btn-b:hover:not(:disabled){background:var(--blue)}
+.btn-g{background:var(--green);color:#fff}.btn-g:hover:not(:disabled){background:var(--green-dk)}
+.btn-o{background:#fff;color:var(--navy);border:2px solid var(--g200)}.btn-o:hover{border-color:var(--blue);background:var(--blue-ghost)}
+.btn-d{background:var(--red-lt);color:var(--red);border:1px solid #fecaca}.btn-d:hover{background:#fee2e2}
+.btn-f{width:100%}
+
+/* Stepper */
+.spr{display:flex;align-items:center;justify-content:center;padding:16px 12px;background:#fff;border-bottom:1px solid var(--g100);flex-wrap:wrap;gap:4px}
+.stp{display:flex;align-items:center;gap:6px}
+.spc{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:700 12px/1 Inter,sans-serif;border:2px solid var(--g300);color:var(--g400);background:#fff;transition:.2s;flex-shrink:0}.spc.on{border-color:var(--blue);background:var(--blue);color:#fff}.spc.dn{border-color:var(--green);background:var(--green);color:#fff}
+.spl{font:600 12px/1 Inter,sans-serif;color:var(--g400)}.spl.on{color:var(--blue)}.spl.dn{color:var(--green)}
+.spln{width:24px;height:2px;background:var(--g200);margin:0 4px;flex-shrink:0}.spln.dn{background:var(--green)}
+
+/* Form */
+.bf{padding:24px 20px 120px}
+.fs{margin-bottom:28px}
+.fla{font:700 15px/1.2 Inter,sans-serif;color:var(--black);margin-bottom:12px;display:block}
+.pg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.prc{padding:16px 10px;border:2px solid var(--g200);border-radius:14px;text-align:center;cursor:pointer;transition:.15s;background:#fff}.prc:hover{border-color:var(--g300)}.prc.on{border-color:var(--blue);background:var(--blue-ghost)}
+.prc .pi{font-size:26px;display:block;margin-bottom:6px}.prc .pl{font:600 13px/1 Inter,sans-serif;color:var(--g600)}.prc.on .pl{color:var(--blue)}
+.af{display:flex;align-items:center;border:2px solid var(--g200);border-radius:14px;padding:4px;background:#fff;transition:.2s}.af:focus-within{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-lt)}
+.af input{flex:1;border:0;padding:12px 14px;font:700 18px/1 Inter,sans-serif;outline:0;background:0 0;min-width:0}.af .ub{padding:8px 14px;background:var(--g100);border-radius:10px;font:600 13px/1 Inter,sans-serif;color:var(--g500);margin-right:4px}
+.eb{margin-top:20px;padding:20px;background:var(--blue-ghost);border-radius:16px;border:1px solid var(--blue-lt);text-align:center}
+.eb .el{font:600 13px/1 Inter,sans-serif;color:var(--blue)}.eb .ea{font-size:32px;font-weight:800;color:var(--navy);margin-top:6px}.eb .en{font-size:12px;color:var(--g500);margin-top:6px}
+
+/* Date */
+.dnv{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.dnv button{padding:8px 14px;border:1.5px solid var(--g200);border-radius:10px;background:#fff;cursor:pointer;font:600 13px/1 Inter,sans-serif;color:var(--g600);transition:.15s}.dnv button:hover:not(:disabled){border-color:var(--blue);color:var(--blue)}.dnv button:disabled{opacity:.3;cursor:not-allowed}
+.dnv span{font:600 14px/1 Inter,sans-serif;color:var(--g600)}
+.dg{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.dc{padding:12px 6px;border:2px solid var(--g200);border-radius:12px;text-align:center;cursor:pointer;transition:.15s;background:#fff}.dc:hover{border-color:var(--g300)}.dc.on{border-color:var(--blue);background:var(--blue-ghost)}
+.dc .dd{font:600 11px/1 Inter,sans-serif;color:var(--g400);text-transform:uppercase}.dc .dm2{font-size:20px;font-weight:800;color:var(--black);margin:4px 0 2px}.dc.on .dm2{color:var(--blue)}.dc .dx{font:500 11px/1 Inter,sans-serif;color:var(--g400)}
+
+/* Time */
+.ts{padding:14px 16px;border:2px solid var(--g200);border-radius:12px;margin-bottom:10px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:.15s;background:#fff}.ts:hover:not(.off){border-color:var(--g300)}.ts.on{border-color:var(--blue);background:var(--blue-ghost)}.ts.off{opacity:.4;cursor:not-allowed;background:var(--g50)}
+.ts .tsl{font:600 15px/1 Inter,sans-serif;color:var(--black);display:flex;align-items:center;gap:8px}
+.ts .ta{font:600 12px/1 Inter,sans-serif;padding:4px 10px;border-radius:6px}.ta.op{color:var(--green);background:var(--green-lt)}.ta.lo{color:var(--yellow);background:var(--yellow-lt)}.ta.fu{color:var(--red);background:var(--red-lt)}
+
+/* Address */
+.ai{width:100%;padding:14px 16px;border:2px solid var(--g200);border-radius:12px;font:400 15px/1.4 Inter,sans-serif;outline:0;transition:.2s;margin-bottom:12px;background:#fff}.ai:focus{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-lt)}
+.mp{height:120px;border-radius:14px;background:var(--blue-ghost);border:2px dashed #d1dff0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;margin-top:12px;cursor:pointer;transition:.2s}.mp:hover{background:var(--blue-lt);border-color:var(--blue)}.mp p{font:600 13px/1 Inter,sans-serif;color:var(--blue)}
+
+/* Confirm card */
+.cc{background:#fff;border:1px solid var(--g200);border-radius:16px;overflow:hidden}
+.chd{padding:16px 18px;background:var(--blue-ghost);border-bottom:1px solid var(--blue-lt)}.chd h3{font:700 16px/1 Inter,sans-serif;color:var(--navy)}
+.cr{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--g100)}.cr:last-child{border-bottom:0}
+.cr .crl{font:400 14px/1.3 Inter,sans-serif;color:var(--g500);display:flex;align-items:center;gap:8px}.cr .crv{font:600 14px/1.3 Inter,sans-serif;color:var(--black);text-align:right;max-width:55%}
+.ct{background:var(--blue-ghost);border-top:2px solid var(--blue-lt)}.ct .crl{font-weight:700}.ct .crv{font-size:20px;font-weight:800;color:var(--navy)}
+
+.pb{padding:12px 16px;background:var(--green-lt);border-radius:12px;border:1px solid #bbf7d0;font:600 14px/1 Inter,sans-serif;color:var(--green-dk);display:flex;align-items:center;gap:8px;margin-bottom:20px}
+
+/* Payment */
+.po{display:flex;align-items:center;gap:12px;padding:14px 16px;border:2px solid var(--g200);border-radius:12px;margin-bottom:10px;cursor:pointer;transition:.15s;background:#fff}.po.on{border-color:var(--blue);background:var(--blue-ghost)}
+.pr{width:20px;height:20px;border-radius:50%;border:2px solid var(--g300);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.15s}.pr.on{border-color:var(--blue)}
+.pr.on::after{content:'';width:10px;height:10px;border-radius:50%;background:var(--blue)}
+.pn{font:600 14px/1 Inter,sans-serif;color:var(--black)}.pd{font:400 12px/1 Inter,sans-serif;color:var(--g500);margin-top:2px}
+
+.ib{width:100%;padding:14px 16px;border:2px solid var(--g200);border-radius:12px;font:400 14px/1.4 Inter,sans-serif;outline:0;resize:vertical;min-height:80px;transition:.2s;background:#fff;font-family:Inter,sans-serif}.ib:focus{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-lt)}
+
+/* Success */
+.sx-c{width:80px;height:80px;border-radius:50%;background:var(--green-lt);display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 20px;animation:popIn .4s ease;color:var(--green)}
+.sx-t{font-size:24px;font-weight:800;color:var(--navy);margin-bottom:8px;text-align:center}.sx-s{font-size:14px;color:var(--g500);text-align:center}
+.sx-id{display:inline-block;padding:6px 14px;background:var(--blue-ghost);border-radius:8px;font:700 14px/1 Inter,sans-serif;color:var(--navy);margin:16px auto;letter-spacing:.5px}
+
+/* Progress */
+.ps2{display:flex;align-items:flex-start;gap:14px;padding-bottom:20px}.ps2:last-child{padding-bottom:0}
+.pdc{display:flex;flex-direction:column;align-items:center;flex-shrink:0}
+.pd2{width:24px;height:24px;border-radius:50%;border:2px solid var(--g300);background:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;z-index:2;font-weight:700}.pd2.dn{background:var(--green);border-color:var(--green);color:#fff}.pd2.cu{background:var(--blue);border-color:var(--blue);color:#fff;animation:pulse 2s infinite}
+.pli{width:2px;flex:1;min-height:16px;background:var(--g200);margin-top:4px}.pli.dn{background:var(--green)}
+.ptx h4{font:600 14px/1.3 Inter,sans-serif;color:var(--black);margin-top:2px}.ptx h4.dim{color:var(--g400)}.ptx p{font:400 12px/1.3 Inter,sans-serif;color:var(--g500);margin-top:2px}
+
+/* Booking cards */
+.bkc{background:#fff;border:1px solid var(--g200);border-radius:14px;padding:16px;margin:0 20px 12px;cursor:pointer;transition:.2s}.bkc:hover{border-color:var(--blue);box-shadow:0 2px 12px rgba(26,58,122,.06)}
+.bkt{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.bks{font:600 15px/1 Inter,sans-serif;color:var(--black);display:flex;align-items:center;gap:8px}
+.bst{padding:4px 10px;border-radius:6px;font:600 12px/1 Inter,sans-serif}.bst.pending{background:var(--yellow-lt);color:#b45309}.bst.confirmed{background:var(--green-lt);color:var(--green)}.bst.cancelled{background:var(--red-lt);color:var(--red)}
+.bkd{display:flex;gap:16px;flex-wrap:wrap}.bkd span{font:400 13px/1 Inter,sans-serif;color:var(--g500);display:flex;align-items:center;gap:4px}
+.bkp{font:800 16px/1 Inter,sans-serif;color:var(--navy);margin-top:10px}
+
+/* Profile */
+.pfc{margin:20px;background:#fff;border:1px solid var(--g200);border-radius:16px;overflow:hidden}
+.pfh{padding:24px 20px;background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;display:flex;align-items:center;gap:16px}
+.pfa{width:60px;height:60px;border-radius:50%;background:var(--blue-mid);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;border:3px solid rgba(255,255,255,.3);flex-shrink:0}
+.pfn{font-size:20px;font-weight:700}.pfe{font-size:13px;opacity:.75;margin-top:2px}
+.pfr{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid var(--g100)}.pfr:last-child{border-bottom:0}
+.pfrl{font:400 14px/1 Inter,sans-serif;color:var(--g500)}.pfrv{font:600 14px/1 Inter,sans-serif;color:var(--black)}
+.pfp{margin:20px;padding:20px;background:linear-gradient(135deg,var(--blue-ghost),var(--blue-lt));border-radius:16px;border:1px solid var(--blue-lt);text-align:center}
+.pfp .ppn{font-size:36px;font-weight:900;color:var(--navy)}.pfp .ppl{font:600 14px/1 Inter,sans-serif;color:var(--blue);margin-top:4px}.pfp .pps{font:400 12px/1.3 Inter,sans-serif;color:var(--g500);margin-top:8px}
+.pfa2{padding:0 20px 100px}
+.pfb{width:100%;padding:14px;border:1.5px solid var(--g200);border-radius:12px;background:#fff;font:600 14px/1 Inter,sans-serif;color:var(--g700);cursor:pointer;margin-bottom:10px;text-align:left;display:flex;align-items:center;gap:12px;transition:.15s}.pfb:hover{border-color:var(--blue);background:var(--blue-ghost);color:var(--blue)}
+
+/* Modal */
+.mo{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:500;display:flex;align-items:flex-end;justify-content:center}
+.ms{max-width:430px;width:100%;background:#fff;border-radius:20px 20px 0 0;padding:24px 20px 40px;animation:slideUp .3s ease}
+.ms h3{font-size:18px;font-weight:700;color:var(--navy);margin-bottom:20px}
+.mf{margin-bottom:16px}.mf label{font:600 13px/1 Inter,sans-serif;color:var(--g500);display:block;margin-bottom:6px}
+.mf input{width:100%;padding:12px 16px;border:2px solid var(--g200);border-radius:12px;font:400 15px/1 Inter,sans-serif;outline:0;transition:.2s}.mf input:focus{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-lt)}
+
+/* Loading */
+.ld{position:fixed;inset:0;background:rgba(255,255,255,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999}
+.spinner{width:44px;height:44px;border:4px solid var(--g200);border-top-color:var(--blue);border-radius:50%;animation:spin .7s linear infinite}
+.lt{margin-top:16px;font:600 15px/1 Inter,sans-serif;color:var(--g600)}
+
+/* Toast */
+.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);padding:12px 24px;border-radius:12px;font:600 14px/1 Inter,sans-serif;color:#fff;z-index:9999;box-shadow:0 8px 30px rgba(0,0,0,.2);animation:toastIn .3s ease;max-width:90vw;text-align:center}
+
+/* Empty */
+.emp{display:flex;flex-direction:column;align-items:center;padding:60px 20px 100px;text-align:center}.emp .ei{font-size:56px;margin-bottom:16px}.emp h3{font-size:18px;font-weight:700;margin-bottom:8px}.emp p{font-size:14px;color:var(--g500)}
+
+.svc-badge{padding:"14px 16px";background:var(--blue-ghost);border-radius:12px;margin-bottom:24px;border:1px solid var(--blue-lt);display:flex;align-items:center;gap:12px}
+</style>
+</head>
+<body>
+
+<div class="shell" id="app"></div>
+
+<script>
+// ═══ DATA ═══
+const SVC=[
+{id:1,name:"Home Deep Cleaning",icon:"🏠",base:1500,rate:8,unit:"per sq ft",cat:"home",desc:"A thorough top-to-bottom deep cleaning of your entire home using professional-grade equipment and eco-friendly products. Every corner, surface, and fixture restored to freshness.",inc:["Deep-seated dirt & grime removal","Dust mites & allergen elimination","Full surface sanitization","Kitchen, bathrooms & living areas","Fans, switchboards & window sills","Floor mopping with disinfectant"]},
+{id:2,name:"Sofa Cleaning",icon:"🛋️",base:800,rate:0,unit:"per sofa",cat:"furn",desc:"Professional upholstery cleaning using steam and dry methods. Safe for all fabric types.",inc:["Deep fabric steam cleaning","Stain & spot removal","Deodorizing & sanitizing","Cushion detailing","Protective coating"]},
+{id:3,name:"Carpet Cleaning",icon:"🧹",base:600,rate:0,unit:"per carpet",cat:"furn",desc:"Deep carpet cleaning with hot water extraction for a like-new finish.",inc:["Deep fiber cleaning","Stain removal","Anti-bacterial treatment","Quick-dry technology"]},
+{id:4,name:"Kitchen Deep Clean",icon:"🍳",base:1200,rate:0,unit:"per kitchen",cat:"home",desc:"Intensive kitchen cleaning covering appliances, cabinets, chimney and exhaust.",inc:["Chimney & exhaust deep clean","Cabinet interior wipe-down","Appliance deep cleaning","Countertop & tile scrub","Sink & drain sanitization"]},
+{id:5,name:"Bathroom Cleaning",icon:"🚿",base:500,rate:0,unit:"per bathroom",cat:"home",desc:"Complete bathroom sanitization and deep cleaning.",inc:["Tile & grout scrubbing","Fixture descaling","Mold & mildew removal","Toilet deep sanitization","Mirror polishing"]},
+{id:6,name:"Water Tank Cleaning",icon:"💧",base:800,rate:0,unit:"per tank",cat:"util",desc:"Professional tank cleaning and sanitization for safe water.",inc:["Complete drainage","High-pressure scrubbing","Anti-bacterial wash","UV sanitization"]},
+{id:7,name:"Glass & Window",icon:"🪟",base:400,rate:0,unit:"per session",cat:"home",desc:"Streak-free window and glass cleaning.",inc:["Interior & exterior glass","Frame & track cleaning","Hard water stain removal","Screen dusting"]},
+{id:8,name:"Office Cleaning",icon:"🏢",base:2000,rate:5,unit:"per sq ft",cat:"comm",desc:"Comprehensive office cleaning for a productive workspace.",inc:["Workstation sanitization","Common area cleaning","Restroom deep clean","Floor mopping & vacuuming"]},
+{id:9,name:"Showroom Cleaning",icon:"🏪",base:3000,rate:4,unit:"per sq ft",cat:"comm",desc:"Specialized cleaning to maintain pristine display environments.",inc:["Display dusting & polishing","Showcase glass cleaning","Floor deep cleaning","Entrance cleaning"]},
+{id:10,name:"Marble Polishing",icon:"✨",base:2500,rate:12,unit:"per sq ft",cat:"spec",desc:"Professional marble polishing for a mirror-like finish.",inc:["Diamond grinding","Crystallization treatment","Stain removal","Protective sealing"]},
+{id:11,name:"Floor Scrubbing",icon:"🧽",base:800,rate:3,unit:"per sq ft",cat:"home",desc:"Machine-powered scrubbing for all floor types.",inc:["Industrial scrubbing","Grout cleaning","Wax application","Anti-slip treatment"]},
+{id:12,name:"Post-Construction",icon:"🔨",base:3500,rate:10,unit:"per sq ft",cat:"spec",desc:"Heavy-duty cleaning after construction or renovation.",inc:["Debris removal","Paint spot cleaning","Cement removal","Final sanitization"]},
+{id:13,name:"High-Rise Glass",icon:"🏙️",base:800,rate:0,unit:"per window",cat:"spec",desc:"Professional high-rise exterior glass cleaning.",inc:["Exterior glass cleaning","Safety harness ops","Frame cleaning","Weather seal check"]}
+];
+const PROPS=[{id:"flat",l:"Flat",i:"🏠"},{id:"house",l:"House",i:"🏡"},{id:"office",l:"Office",i:"🏢"},{id:"showroom",l:"Showroom",i:"🏪"},{id:"hospital",l:"Hospital",i:"🏥"},{id:"school",l:"School",i:"🏫"}];
+const SLOTS=[{id:1,l:"8:00 AM – 10:00 AM",ok:true,n:3},{id:2,l:"10:00 AM – 12:00 PM",ok:true,n:1},{id:3,l:"12:00 PM – 2:00 PM",ok:false,n:0},{id:4,l:"2:00 PM – 4:00 PM",ok:true,n:5},{id:5,l:"4:00 PM – 6:00 PM",ok:true,n:2}];
+const CATS=[{id:"all",l:"All"},{id:"home",l:"Home"},{id:"furn",l:"Furniture"},{id:"comm",l:"Commercial"},{id:"spec",l:"Specialty"},{id:"util",l:"Utility"}];
+const catBg={home:"#e8eef8",furn:"#dcfce7",comm:"#fef9c3",spec:"#fce7f3",util:"#e0e7ff"};
+
+function makeDates(){const d=[];const t=new Date();for(let i=1;i<=14;i++){const x=new Date(t);x.setDate(t.getDate()+i);d.push({day:x.toLocaleDateString("en-US",{weekday:"short"}),date:x.getDate(),mon:x.toLocaleDateString("en-US",{month:"short"}),full:x.toISOString().split("T")[0]});}return d;}
+const DATES=makeDates();
+function calcP(s,a){const n=parseInt(a)||0;return s.rate>0?s.base+n*s.rate:s.base;}
+function bid(){return"BK"+Date.now().toString(36).toUpperCase()+Math.random().toString(36).substr(2,4).toUpperCase();}
+function greet(){const h=new Date().getHours();return h<12?"Good morning":h<17?"Good afternoon":"Good evening";}
+function fmt(n){return n.toLocaleString("en-IN");}
+function $(s){return document.querySelector(s);}
+function $$(s){return document.querySelectorAll(s);}
+
+// ═══ STATE ═══
+let state={
+  screen:"home",tab:"home",
+  prof:{name:"Rakesh",phone:"8002955598",email:"rakesh@email.com",city:"Ranchi, Jharkhand",points:215},
+  bookings:[],selSvc:null,
+  // booking flow
+  bStep:0,bProp:"flat",bArea:"1000",bDateIdx:1,bTimeIdx:null,bDatePage:0,
+  bAddr:"",bAddr2:"",bLm:"",bPin:"",bInst:"",bPay:"cash",
+  // home
+  hSearch:"",hTab:0,hArea:"500",hCat:"all",
+  // detail booking for view
+  selBk:null,doneBk:null,
+  editProf:false,editForm:null
+};
+
+// ═══ TOAST ═══
+let toastTimer=null;
+function showToast(msg,type="info"){
+  const old=document.getElementById("toast");if(old)old.remove();
+  clearTimeout(toastTimer);
+  const bg=type==="success"?"#16a34a":type==="error"?"#ef4444":"#1a3a7a";
+  const d=document.createElement("div");d.id="toast";d.className="toast";d.style.background=bg;
+  d.textContent=(type==="success"?"✓ ":type==="error"?"✕ ":"ℹ ")+msg;
+  document.body.appendChild(d);
+  toastTimer=setTimeout(()=>{d.remove();},3000);
+}
+
+// ═══ RENDER ═══
+function render(){
+  const app=document.getElementById("app");
+  let h="";
+  if(state.screen==="home")h=renderHome()+renderNav("home");
+  else if(state.screen==="detail")h=renderDetail();
+  else if(state.screen==="booking")h=renderBooking();
+  else if(state.screen==="success")h=renderSuccess();
+  else if(state.screen==="bookings")h=(state.selBk?renderBkDetail():renderBookings())+(!state.selBk?renderNav("bookings"):"");
+  else if(state.screen==="profile")h=renderProfile()+renderNav("profile");
+  app.innerHTML=h;
+  bindEvents();
+}
+
+function renderNav(cur){
+  return`<div class="bn">
+    <button class="ni ${cur==="home"?"on":""}" onclick="goTab('home')"><span class="nx">🏠</span>Home</button>
+    <button class="ni ${cur==="bookings"?"on":""}" onclick="goTab('bookings')"><span class="nx">📅</span>Bookings</button>
+    <button class="ni ${cur==="profile"?"on":""}" onclick="goTab('profile')"><span class="nx">👤</span>Profile</button>
+  </div>`;
+}
+
+// ── HOME ──
+function renderHome(){
+  const s=SVC[state.hTab];const est=calcP(s,state.hArea);
+  const filt=SVC.filter(x=>{
+    const ms=x.name.toLowerCase().includes(state.hSearch.toLowerCase());
+    const mc=state.hCat==="all"||x.cat===state.hCat;return ms&&mc;
+  });
+  return`<div class="fi">
+    <div class="hd"><div class="hd-g">${greet()}, ${state.prof.name} 👋</div><div class="hd-l">📍 ${state.prof.city}</div></div>
+    <div class="sb"><div class="sb-w"><span class="si">🔍</span><input id="hsearch" placeholder="Search services..." value="${state.hSearch}"/></div></div>
+    <div class="qe"><h3>⚡ Quick Price Estimate</h3>
+      <div class="tabs">${SVC.slice(0,5).map((x,i)=>`<button class="tb ${state.hTab===i?"on":""}" onclick="state.hTab=${i};render()">${x.icon} ${x.name.split(' ').slice(0,2).join(' ')}</button>`).join("")}</div>
+      ${s.rate>0?`<label class="fl">Area (sq ft)</label>
+      <div class="ar"><input id="harea" type="number" value="${state.hArea}"/><span>sq ft</span></div>
+      <div class="chs">${["200","500","1000","2000"].map(v=>`<button class="ch ${state.hArea===v?"on":""}" onclick="state.hArea='${v}';render()">${v>=1000?v/1000+"k":v}</button>`).join("")}</div>`:""}
+      <div class="er"><div><div class="ep">₹${fmt(est)}</div><div class="es">${s.rate>0?`₹${fmt(s.base)} base + ₹${s.rate}/sq ft`:s.unit}</div></div><button class="btn btn-b" onclick="openSvc(${s.id})">Book Now →</button></div>
+    </div>
+    <div class="st">Popular Services</div>
+    <div class="ps">${SVC.slice(0,5).map(x=>`<div class="pc" onclick="openSvc(${x.id})"><div class="pc-i">${x.icon}</div><div class="pc-b"><h4>${x.name}</h4><p>Starting ₹${fmt(x.base)}</p></div></div>`).join("")}</div>
+    <div class="st">All Services<span>${filt.length} services</span></div>
+    <div class="cb">${CATS.map(c=>`<button class="tb ${state.hCat===c.id?"on":""}" onclick="state.hCat='${c.id}';render()">${c.l}</button>`).join("")}</div>
+    <div class="sg">${filt.map(x=>`<div class="sc" onclick="openSvc(${x.id})"><div class="sc-ic" style="background:${catBg[x.cat]||"#e8eef8"}">${x.icon}</div><h4>${x.name}</h4><p>Starting ₹${fmt(x.base)}</p></div>`).join("")}</div>
+  </div>`;
+}
+
+// ── DETAIL ──
+function renderDetail(){
+  const s=state.selSvc;if(!s)return"";
+  const catName=s.cat==="comm"?"Commercial":s.cat==="spec"?"Specialty":"Residential";
+  return`<div class="fi">
+    <div class="hd"><button class="hd-back" onclick="goBack()">← Back</button><div class="hd-t">Service Details</div></div>
+    <div class="dh">${s.icon}</div>
+    <div class="db">
+      <div class="dn">${s.name}</div><div class="dt">${catName} Service</div>
+      <div class="dpb"><div class="dpl">Starting Price</div><div class="dpa">₹${fmt(s.base)}</div><div class="dpu">${s.unit}${s.rate>0?" · ₹"+s.rate+"/sq ft after base":""}</div></div>
+      <div class="dst">About This Service</div><p class="ddc">${s.desc}</p>
+      <div class="dst">What's Included</div><ul class="dl">${s.inc.map(x=>`<li><span class="ck">✓</span>${x}</li>`).join("")}</ul>
+      <div class="di">ℹ️ Final price is calculated based on property size and requirements.</div>
+      <div class="dcl" onclick="window.open('tel:8002955598')">📞 Questions? Call us: <strong style="margin-left:4px">800-295-5598</strong></div>
+    </div>
+    <div class="sky"><div><div class="sp">₹${fmt(s.base)}</div><div class="sl">Starting price</div></div><button class="btn btn-b" onclick="startBooking()">Book Now →</button></div>
+  </div>`;
+}
+
+// ── BOOKING ──
+function renderBooking(){
+  const s=state.selSvc;if(!s)return"";
+  const an=parseInt(state.bArea)||0;const tot=calcP(s,state.bArea);const pts=Math.floor(tot/100);
+  const vd=DATES.slice(state.bDatePage*5,state.bDatePage*5+5);
+  const ok0=state.bProp&&an>0;
+  const ok1=state.bDateIdx!==null&&state.bTimeIdx!==null;
+  const ok2=state.bAddr.trim().length>3&&state.bPin.trim().length===6;
+  const step=state.bStep;
+
+  let stepper=`<div class="spr">${["Details","Schedule","Address","Confirm"].map((x,i)=>`<div style="display:flex;align-items:center"><div style="display:flex;align-items:center"><div class="spc ${i<step?"dn":i===step?"on":""}">${i<step?"✓":i+1}</div><span class="spl ${i<step?"dn":i===step?"on":""}">${x}</span></div>${i<3?`<div class="spln ${i<step?"dn":""}"></div>`:""}</div>`).join("")}</div>`;
+
+  let content="";
+  if(step===0){
+    content=`<div class="fi">
+      <div style="padding:14px 16px;background:#f3f6fc;border-radius:12px;margin-bottom:24px;border:1px solid #e8eef8;display:flex;align-items:center;gap:12px"><span style="font-size:28px">${s.icon}</span><div><div style="font-weight:700;color:#0f1d3d">${s.name}</div><div style="font-size:13px;color:#6b7280">Starting ₹${fmt(s.base)}</div></div></div>
+      <div class="fs"><label class="fla">Property Type</label><div class="pg">${PROPS.map(p=>`<button class="prc ${state.bProp===p.id?"on":""}" onclick="state.bProp='${p.id}';render()"><span class="pi">${p.i}</span><span class="pl">${p.l}</span></button>`).join("")}</div></div>
+      <div class="fs"><label class="fla">Area (sq ft)</label><div class="af"><input id="barea" type="number" value="${state.bArea}" placeholder="Enter area"/><span class="ub">sq ft</span></div>
+      <div class="chs" style="margin-top:10px">${["500","1000","1500","2000","3000"].map(v=>`<button class="ch ${state.bArea===v?"on":""}" onclick="state.bArea='${v}';render()">${v}</button>`).join("")}</div></div>
+      <div class="eb"><div class="el">Estimated Total</div><div class="ea">₹${fmt(tot)}</div><div class="en">${s.rate>0?`₹${fmt(s.base)} base + ₹${s.rate}/sq ft`:s.unit} · Final price may vary</div></div>
+    </div>`;
+  } else if(step===1){
+    content=`<div class="fi">
+      <div class="fs"><label class="fla">Select Date</label>
+        <div class="dnv"><button ${state.bDatePage===0?"disabled":""} onclick="state.bDatePage--;render()">← Prev</button><span>${vd[0]?.mon} ${vd[0]?.date} – ${vd[vd.length-1]?.date}</span><button ${state.bDatePage>=1?"disabled":""} onclick="state.bDatePage++;render()">Next →</button></div>
+        <div class="dg">${vd.map((d,i)=>{const ri=state.bDatePage*5+i;return`<div class="dc ${state.bDateIdx===ri?"on":""}" onclick="state.bDateIdx=${ri};render()"><div class="dd">${d.day}</div><div class="dm2">${d.date}</div><div class="dx">${d.mon}</div></div>`;}).join("")}</div>
+      </div>
+      <div class="fs"><label class="fla">Select Time Slot</label>${SLOTS.map((sl,i)=>`<div class="ts ${state.bTimeIdx===i?"on":""} ${!sl.ok?"off":""}" onclick="${sl.ok?`state.bTimeIdx=${i};render()`:""}"><span class="tsl">🕐 ${sl.l}</span><span class="ta ${!sl.ok?"fu":sl.n<=2?"lo":"op"}">${!sl.ok?"Full":sl.n<=2?sl.n+" left":sl.n+" open"}</span></div>`).join("")}</div>
+    </div>`;
+  } else if(step===2){
+    content=`<div class="fi">
+      <div class="fs"><label class="fla">Service Address</label>
+        <input class="ai" id="baddr" placeholder="House/Flat no., Building name *" value="${state.bAddr}"/>
+        <input class="ai" id="baddr2" placeholder="Street, Area, Colony" value="${state.bAddr2}"/>
+        <div style="display:flex;gap:12px"><input class="ai" id="blm" placeholder="Landmark" value="${state.bLm}" style="flex:1"/><input class="ai" id="bpin" placeholder="PIN Code *" value="${state.bPin}" style="width:120px" inputmode="numeric" maxlength="6"/></div>
+        <div class="mp"><span style="font-size:28px">📍</span><p>Tap to pin location on map</p></div>
+      </div>
+      <div class="di" style="margin-top:0">ℹ️ Our team will arrive at this address. Please ensure someone is available.</div>
+    </div>`;
+  } else {
+    const prop=PROPS.find(p=>p.id===state.bProp);
+    const date=DATES[state.bDateIdx];
+    const time=state.bTimeIdx!==null?SLOTS[state.bTimeIdx]:null;
+    content=`<div class="fi">
+      <div class="pb">🎉 You'll earn ${pts} JAE Points with this booking!</div>
+      <div class="cc"><div class="chd"><h3>Booking Summary</h3></div>
+        <div class="cr"><span class="crl">${s.icon} Service</span><span class="crv">${s.name}</span></div>
+        <div class="cr"><span class="crl">🏠 Property</span><span class="crv">${prop?prop.l:""} · ${an} sq ft</span></div>
+        <div class="cr"><span class="crl">📅 Date</span><span class="crv">${date?date.day+", "+date.mon+" "+date.date:""}</span></div>
+        <div class="cr"><span class="crl">🕐 Time</span><span class="crv">${time?time.l:"—"}</span></div>
+        <div class="cr"><span class="crl">📍 Address</span><span class="crv" style="font-size:13px">${state.bAddr}${state.bAddr2?", "+state.bAddr2:""} – ${state.bPin}</span></div>
+        <div class="cr ct"><span class="crl">Total</span><span class="crv">₹${fmt(tot)}</span></div>
+      </div>
+      <div class="fs" style="margin-top:24px"><label class="fla">Payment Method</label>
+        <div class="po ${state.bPay==="cash"?"on":""}" onclick="state.bPay='cash';render()"><div class="pr ${state.bPay==="cash"?"on":""}"></div><div><div class="pn">Cash on Service</div><div class="pd">Pay after completion</div></div></div>
+        <div class="po ${state.bPay==="upi"?"on":""}" onclick="state.bPay='upi';render()"><div class="pr ${state.bPay==="upi"?"on":""}"></div><div><div class="pn">UPI Payment</div><div class="pd">GPay, PhonePe, Paytm</div></div></div>
+      </div>
+      <div class="fs"><label class="fla">Special Instructions (optional)</label><textarea class="ib" id="binst" placeholder="Any special requests for our team...">${state.bInst}</textarea></div>
+    </div>`;
+  }
+
+  const disabled=(step===0&&!ok0)||(step===1&&!ok1)||(step===2&&!ok2);
+  const bottomBtn=step<3?`<button class="btn btn-b btn-f" ${disabled?"disabled":""} onclick="nextStep()">Continue →</button>`:`<button class="btn btn-g btn-f" onclick="confirmBooking()">✓ Confirm Booking</button>`;
+
+  return`<div class="fi">
+    <div class="hd"><button class="hd-back" onclick="${step>0?"prevStep()":"goBack()"}"">← ${step>0?"Back":"Cancel"}</button><div class="hd-t">Book Service</div></div>
+    ${stepper}<div class="bf">${content}</div>
+    <div class="sky ctr">${bottomBtn}</div>
+  </div>`;
+}
+
+// ── SUCCESS ──
+function renderSuccess(){
+  const b=state.doneBk;if(!b)return"";
+  return`<div class="fi" style="padding:40px 20px;text-align:center">
+    <div class="sx-c">✓</div><div class="sx-t">Booking Confirmed!</div><div class="sx-s">Your ${b.sn} has been booked successfully.</div>
+    <div class="sx-id">   #${b.id}   </div>
+    <div class="cc" style="text-align:left;margin-top:16px">
+      <div class="chd"><h3>Summary</h3></div>
+      <div class="cr"><span class="crl">${b.si} Service</span><span class="crv">${b.sn}</span></div>
+      <div class="cr"><span class="crl">📅 Date</span><span class="crv">${b.date.day}, ${b.date.mon} ${b.date.date}</span></div>
+      <div class="cr"><span class="crl">🕐 Time</span><span class="crv">${b.time.l}</span></div>
+      <div class="cr"><span class="crl">📍 Address</span><span class="crv" style="font-size:13px">${b.addr} – ${b.pin}</span></div>
+      <div class="cr ct"><span class="crl">Total</span><span class="crv">₹${fmt(b.tot)}</span></div>
+    </div>
+    <div class="pb" style="margin-top:20px;justify-content:center">🎉 +${b.pts} JAE Points earned!</div>
+    <div style="display:flex;gap:12px;margin-top:16px"><button class="btn btn-o btn-f" onclick="goTab('bookings')">View Bookings</button><button class="btn btn-b btn-f" onclick="goTab('home')">Back to Home</button></div>
+  </div>`;
+}
+
+// ── BOOKINGS ──
+function renderBookings(){
+  const sl={pending:"Pending",confirmed:"Confirmed",cancelled:"Cancelled"};
+  if(state.bookings.length===0)return`<div class="fi"><div class="hd"><div class="hd-t">My Bookings</div></div><div class="emp"><div class="ei">📋</div><h3>No bookings yet</h3><p>Your booking history will appear here.</p></div></div>`;
+  return`<div class="fi"><div class="hd"><div class="hd-t">My Bookings</div></div><div style="padding-top:16px;padding-bottom:100px">${state.bookings.map((b,i)=>`<div class="bkc" onclick="viewBooking(${i})"><div class="bkt"><span class="bks">${b.si} ${b.sn}</span><span class="bst ${b.status}">${sl[b.status]||b.status}</span></div><div class="bkd"><span>📅 ${b.date.day}, ${b.date.mon} ${b.date.date}</span><span>🕐 ${b.time.l}</span></div><div class="bkp">₹${fmt(b.tot)}</div></div>`).join("")}</div></div>`;
+}
+
+function renderBkDetail(){
+  const b=state.selBk;if(!b)return"";
+  const sl={pending:"Pending",confirmed:"Confirmed",cancelled:"Cancelled"};
+  const prop=PROPS.find(p=>p.id===b.prop);
+  let steps=[{l:"Booking Received",s:"We received your request",st:"done"},{l:"Booking Confirmed",s:"Team is reviewing",st:b.status==="pending"?"current":"done"},{l:"Staff Assigned",s:"A team will be assigned",st:"pending"},{l:"Service In Progress",s:"Work underway",st:"pending"},{l:"Service Completed",s:"All done!",st:"pending"}];
+  if(b.status==="cancelled")steps=[{l:"Booking Received",s:"We received your request",st:"done"},{l:"Booking Cancelled",s:"This booking was cancelled",st:"cancelled"}];
+
+  return`<div class="fi">
+    <div class="hd"><button class="hd-back" onclick="state.selBk=null;render()">← Back</button><div class="hd-t">Booking Details</div></div>
+    <div style="padding:20px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px"><div><div style="font-size:12px;font-weight:600;color:#1a3a7a;text-transform:uppercase;letter-spacing:.5px">Booking ID</div><div style="font-size:18px;font-weight:800;color:#0f1d3d;margin-top:4px">#${b.id}</div></div><span class="bst ${b.status}">${sl[b.status]||b.status}</span></div>
+      <div class="cc"><div class="chd"><h3>Service Details</h3></div>
+        <div class="cr"><span class="crl">${b.si} Service</span><span class="crv">${b.sn}</span></div>
+        <div class="cr"><span class="crl">🏠 Property</span><span class="crv">${prop?prop.l:""} · ${b.area} sq ft</span></div>
+        <div class="cr"><span class="crl">📅 Date</span><span class="crv">${b.date.day}, ${b.date.mon} ${b.date.date}</span></div>
+        <div class="cr"><span class="crl">🕐 Time</span><span class="crv">${b.time.l}</span></div>
+        <div class="cr"><span class="crl">📍 Address</span><span class="crv" style="font-size:13px">${b.addr} – ${b.pin}</span></div>
+        <div class="cr"><span class="crl">💳 Payment</span><span class="crv">${b.pay==="cash"?"Cash":"UPI"}</span></div>
+        <div class="cr ct"><span class="crl">Total</span><span class="crv">₹${fmt(b.tot)}</span></div>
+      </div>
+      ${b.inst?`<div class="di" style="margin-top:16px">📝 ${b.inst}</div>`:""}
+      <div style="margin-top:24px"><div style="font:700 15px Inter,sans-serif;margin-bottom:16px">Booking Progress</div>
+        ${steps.map((p,i,arr)=>`<div class="ps2"><div class="pdc"><div class="pd2 ${p.st==="done"?"dn":p.st==="current"?"cu":""}" ${p.st==="cancelled"?'style="background:#ef4444;border-color:#ef4444;color:#fff"':""}>${p.st==="done"||p.st==="cancelled"?"✓":p.st==="current"?"●":""}</div>${i<arr.length-1?`<div class="pli ${p.st==="done"?"dn":""}" ${p.st==="cancelled"?'style="background:#ef4444"':""}></div>`:""}</div><div class="ptx"><h4 class="${p.st==="pending"?"dim":""}" ${p.st==="cancelled"?'style="color:#ef4444"':""}>${p.l}</h4>${p.s?`<p>${p.s}</p>`:""}</div></div>`).join("")}
+      </div>
+      ${b.status!=="cancelled"?`<button class="btn btn-d btn-f" style="margin-top:16px" onclick="cancelBooking('${b.id}')">✕ Cancel Booking</button>`:""}
+      <div class="dcl" style="margin-top:16px" onclick="window.open('tel:8002955598')">📞 Need help? Call us: <strong style="margin-left:4px">800-295-5598</strong></div>
+    </div>
+  </div>`;
+}
+
+// ── PROFILE ──
+function renderProfile(){
+  const p=state.prof;const ts=state.bookings.filter(b=>b.status!=="cancelled").reduce((s,b)=>s+b.tot,0);
+  let modal="";
+  if(state.editProf){
+    const f=state.editForm;
+    modal=`<div class="mo" id="profModal"><div class="ms"><h3>Edit Profile</h3>
+      <div class="mf"><label>Name</label><input id="ef_name" value="${f.name}"/></div>
+      <div class="mf"><label>Email</label><input id="ef_email" value="${f.email}"/></div>
+      <div class="mf"><label>Phone</label><input id="ef_phone" value="${f.phone}"/></div>
+      <div class="mf"><label>City</label><input id="ef_city" value="${f.city}"/></div>
+      <div style="display:flex;gap:12px;margin-top:8px"><button class="btn btn-o btn-f" onclick="state.editProf=false;render()">Cancel</button><button class="btn btn-b btn-f" onclick="saveProfile()">Save</button></div>
+    </div></div>`;
+  }
+  return`<div class="fi">
+    <div class="hd"><div class="hd-t">My Profile</div></div>
+    <div class="pfc"><div class="pfh"><div class="pfa">${p.name.charAt(0)}</div><div><div class="pfn">${p.name}</div><div class="pfe">${p.email}</div></div></div>
+      <div class="pfr"><span class="pfrl">Phone</span><span class="pfrv">${p.phone}</span></div>
+      <div class="pfr"><span class="pfrl">City</span><span class="pfrv">${p.city}</span></div>
+      <div class="pfr"><span class="pfrl">Total Bookings</span><span class="pfrv">${state.bookings.length}</span></div>
+      <div class="pfr"><span class="pfrl">Total Spent</span><span class="pfrv">₹${fmt(ts)}</span></div>
+    </div>
+    <div class="pfp"><div class="ppn">${p.points}</div><div class="ppl">JAE Points</div><div class="pps">Earn 1 point per ₹100 spent. Redeem for discounts.</div></div>
+    <div class="pfa2">
+      <button class="pfb" onclick="openEditProfile()">✏️ Edit Profile</button>
+      <button class="pfb" onclick="showToast('Share feature coming soon!','info')">📤 Share App</button>
+      <button class="pfb" onclick="showToast('Logged out','info')">🚪 Logout</button>
+    </div>
+    ${modal}
+  </div>`;
+}
+
+// ═══ ACTIONS ═══
+function goTab(t){state.screen=t;state.tab=t;state.selSvc=null;state.doneBk=null;state.selBk=null;state.editProf=false;render();}
+function goBack(){if(state.screen==="detail"){state.screen="home";}else if(state.screen==="booking"){state.screen="detail";}render();}
+function openSvc(id){state.selSvc=SVC.find(s=>s.id===id);state.screen="detail";render();}
+function startBooking(){state.screen="booking";state.bStep=0;state.bProp="flat";state.bArea="1000";state.bDateIdx=1;state.bTimeIdx=null;state.bDatePage=0;state.bAddr="";state.bAddr2="";state.bLm="";state.bPin="";state.bInst="";state.bPay="cash";render();}
+function nextStep(){saveFormInputs();state.bStep++;render();}
+function prevStep(){saveFormInputs();state.bStep--;render();}
+
+function saveFormInputs(){
+  const s=state.bStep;
+  if(s===0){const el=document.getElementById("barea");if(el)state.bArea=el.value;}
+  if(s===2){
+    const a=document.getElementById("baddr");if(a)state.bAddr=a.value;
+    const a2=document.getElementById("baddr2");if(a2)state.bAddr2=a2.value;
+    const lm=document.getElementById("blm");if(lm)state.bLm=lm.value;
+    const pin=document.getElementById("bpin");if(pin)state.bPin=pin.value;
+  }
+  if(s===3){const i=document.getElementById("binst");if(i)state.bInst=i.value;}
+}
+
+function confirmBooking(){
+  saveFormInputs();
+  const s=state.selSvc;const an=parseInt(state.bArea)||0;const tot=calcP(s,state.bArea);const pts=Math.floor(tot/100);
+  // show loading
+  document.getElementById("app").innerHTML+='<div class="ld"><div class="spinner"></div><div class="lt">Confirming your booking...</div></div>';
+  setTimeout(()=>{
+    const bk={id:bid(),sn:s.name,si:s.icon,sid:s.id,prop:state.bProp,area:an,date:DATES[state.bDateIdx],time:SLOTS[state.bTimeIdx],tot,addr:`${state.bAddr}${state.bAddr2?", "+state.bAddr2:""}`,lm:state.bLm,pin:state.bPin,inst:state.bInst,pay:state.bPay,status:"pending",pts,at:new Date().toISOString()};
+    state.bookings.unshift(bk);state.prof.points+=pts;state.doneBk=bk;state.screen="success";
+    render();showToast("Booking confirmed!","success");
+  },2000);
+}
+
+function viewBooking(i){state.selBk=state.bookings[i];render();}
+function cancelBooking(id){
+  state.bookings=state.bookings.map(b=>b.id===id?{...b,status:"cancelled"}:b);
+  state.selBk=state.bookings.find(b=>b.id===id);
+  render();showToast("Booking cancelled","success");
+}
+
+function openEditProfile(){state.editProf=true;state.editForm={...state.prof};render();}
+function saveProfile(){
+  const n=document.getElementById("ef_name");const e=document.getElementById("ef_email");
+  const ph=document.getElementById("ef_phone");const c=document.getElementById("ef_city");
+  if(n)state.prof.name=n.value;if(e)state.prof.email=e.value;if(ph)state.prof.phone=ph.value;if(c)state.prof.city=c.value;
+  state.editProf=false;render();showToast("Profile updated!","success");
+}
+
+// ═══ EVENT BINDING ═══
+function bindEvents(){
+  const hs=document.getElementById("hsearch");
+  if(hs){hs.addEventListener("input",function(){state.hSearch=this.value;render();});}
+  const ha=document.getElementById("harea");
+  if(ha){ha.addEventListener("input",function(){state.hArea=this.value;render();});}
+  const ba=document.getElementById("barea");
+  if(ba){ba.addEventListener("input",function(){state.bArea=this.value;render();});}
+  // address fields save on input
+  ["baddr","baddr2","blm"].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)el.addEventListener("input",function(){state["b"+id.replace("b","").charAt(0).toUpperCase()+id.replace("b","").slice(1)]=this.value;});
+  });
+  const baddr=document.getElementById("baddr");if(baddr)baddr.addEventListener("input",function(){state.bAddr=this.value;});
+  const baddr2=document.getElementById("baddr2");if(baddr2)baddr2.addEventListener("input",function(){state.bAddr2=this.value;});
+  const blm=document.getElementById("blm");if(blm)blm.addEventListener("input",function(){state.bLm=this.value;});
+  const bpin=document.getElementById("bpin");
+  if(bpin){bpin.addEventListener("input",function(){this.value=this.value.replace(/\D/g,"").slice(0,6);state.bPin=this.value;});}
+  const binst=document.getElementById("binst");if(binst)binst.addEventListener("input",function(){state.bInst=this.value;});
+  // close modal on overlay click
+  const mo=document.getElementById("profModal");
+  if(mo)mo.addEventListener("click",function(e){if(e.target===this){state.editProf=false;render();}});
+}
+
+// ═══ INIT ═══
+render();
+</script>
+</body>
+</html>
